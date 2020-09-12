@@ -1,0 +1,37 @@
+<h3>UOA Table</h3>
+<p><%= link_to("Download CSV", uoa_index_path(format: :csv)) %></p>
+<table>
+	<thead>
+		<th>#</th>
+		<th>Symbol</th>
+		<th>Price</th>
+		<th>Type</th>
+		<th>Strike</th>
+		<th>Expiration Date</th>
+		<th>DTE</th>
+		<th>Last</th>
+		<th>Volume</th>
+		<th>Open Interest</th>
+		<th>I.V.</th>
+		<th>Last Traded</th>
+	</thead>
+	<tbody>
+		<% @collection.each_with_index do |o, i| %>
+			<tr>
+				<td><%= i+1 			%></td>
+				<td><%= o['Symbol']		%></td>
+				<td><%= o['Price'] 		%></td>
+				<td><%= o['Type'] 		%></td>
+				<td><%= o['Strike']		%></td>
+				<td><%= o['Exp Date'] 	%></td>
+				<td><%= o['DTE']		%></td>
+				<td><%= o['Last']		%></td>
+				<td><%= o['Volume']		%></td>
+				<td><%= o['Open Int']	%></td>
+				<td><%= o['IV']			%></td>
+				<td><%= o['Last Trade'] %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+

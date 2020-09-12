@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.5
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: market_insights_development
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'; env"
+    volumes:
+      - .:/market-insights
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      RAILS_ENV: development
