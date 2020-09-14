@@ -23,8 +23,8 @@ class UOA
 
 	def search(params)
 		query = {}
-		if params.has_key?(:date)
-			date_parsed = Date.strptime(params[:date], '%m/%d/%Y')
+		if params[:search][:date]
+			date_parsed = Date.strptime(params[:search][:date], '%m/%d/%Y')
 			condition = { 'created_at': { '$gt': date_parsed.beginning_of_day, '$lt': date_parsed.end_of_day } }
 			query.merge!(condition)
 		end

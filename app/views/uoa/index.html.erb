@@ -1,8 +1,8 @@
 
 <%= form_tag(uoa_index_path, method: :get) do %>
 	<%= label_tag(:search_date) %>
-	<%= text_field_tag(:date,  nil, class: 'datepicker', placeholder: 'Search Date') %>
-	<%= submit_tag('search') %>
+	<%= text_field_tag("search[date]", params[:search].present? ? params[:search][:date] : nil, class: 'datepicker', placeholder: 'Search Date') %>
+	<%= submit_tag('search', name: nil) %>
 <% end %>
 <%= link_to("Reset Search", uoa_index_path) %>
 

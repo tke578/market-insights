@@ -5,8 +5,7 @@ class UoaController < ApplicationController
 
 	def index
 		options = UOA.new()
-
-		if uoa_params
+		if params[:search].present?
 			options.search(uoa_params)
 		else
 			options.recent_trades
@@ -21,6 +20,6 @@ class UoaController < ApplicationController
 	private
 
 	def uoa_params
-		params.permit(:date, :commit, :format)
+		params.require(:search).permit(:date, :commit)
 	end
 end
