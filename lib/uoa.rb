@@ -4,6 +4,7 @@ require 'csv'
 Mongo::Logger.logger.level = Logger::FATAL
 
 class UOA
+	include ActiveModel::Validations
 
 	attr_accessor :data
 	attr_reader	:collection

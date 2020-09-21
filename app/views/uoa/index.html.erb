@@ -1,56 +1,40 @@
+<div class="container">
+	<%= render 'search' %>
 
-<%= form_tag(uoa_index_path, method: :get) do %>
-	<%= label_tag(:search_date) %>
-	<%= text_field_tag("search[date]", params[:search].present? ? params[:search][:date] : nil, class: 'datepicker', placeholder: 'Search Date') %>
-	<%= submit_tag('search', name: nil) %>
-<% end %>
-<%= link_to("Reset Search", uoa_index_path) %>
+	<h2>Unusual Options Activity</h2>
+	<table class="table table-hover">
+		<thead>
+			<th scope="col">#</th>
+			<th scope="col">Symbol</th>
+			<th scope="col">Price</th>
+			<th scope="col">Type</th>
+			<th scope="col">Strike</th>
+			<th scope="col">Expiration Date</th>
+			<th scope="col">DTE</th>
+			<th scope="col">Last</th>
+			<th scope="col">Volume</th>
+			<th scope="col">Open Interest</th>
+			<th scope="col">I.V.</th>
+			<th scope="col">Last Traded</th>
+		</thead>
+		<tbody>
+			<% @collection.each_with_index do |o, i| %>
+				<tr>
+					<td scope="row"><%= i+1 			%></td>
+					<td scope="row"><%= o['Symbol']		%></td>
+					<td scope="row"><%= o['Price'] 		%></td>
+					<td scope="row"><%= o['Type'] 		%></td>
+					<td scope="row"><%= o['Strike']		%></td>
+					<td scope="row"><%= o['Exp Date'] 	%></td>
+					<td scope="row"><%= o['DTE']		%></td>
+					<td scope="row"><%= o['Last']		%></td>
+					<td scope="row"><%= o['Volume']		%></td>
+					<td scope="row"><%= o['Open Int']	%></td>
+					<td scope="row"><%= o['IV']			%></td>
+					<td scope="row"><%= o['Last Trade'] %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
 
-
-<h3>UOA Table</h3>
-<p><%= link_to("Download CSV", uoa_index_path(request.params.merge(format: :csv))) %></p>
-
-
-<table>
-	<thead>
-		<th>#</th>
-		<th>Symbol</th>
-		<th>Price</th>
-		<th>Type</th>
-		<th>Strike</th>
-		<th>Expiration Date</th>
-		<th>DTE</th>
-		<th>Last</th>
-		<th>Volume</th>
-		<th>Open Interest</th>
-		<th>I.V.</th>
-		<th>Last Traded</th>
-	</thead>
-	<tbody>
-		<% @collection.each_with_index do |o, i| %>
-			<tr>
-				<td><%= i+1 			%></td>
-				<td><%= o['Symbol']		%></td>
-				<td><%= o['Price'] 		%></td>
-				<td><%= o['Type'] 		%></td>
-				<td><%= o['Strike']		%></td>
-				<td><%= o['Exp Date'] 	%></td>
-				<td><%= o['DTE']		%></td>
-				<td><%= o['Last']		%></td>
-				<td><%= o['Volume']		%></td>
-				<td><%= o['Open Int']	%></td>
-				<td><%= o['IV']			%></td>
-				<td><%= o['Last Trade'] %></td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-	$(function() {
-    $(".datepicker" ).datepicker();
-  } );
-</script>

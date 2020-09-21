@@ -6,11 +6,15 @@ class UoaController < ApplicationController
 	def index
 		options = UOA.new()
 		if params[:search].present?
+			puts "has params"
 			options.search(uoa_params)
 		else
+			puts "no params"
 			options.recent_trades
 		end
 		@collection = options.data
+		puts "Size"
+		puts @collection.size
 		respond_to  do |format|
 			format.html
 			format.csv {
