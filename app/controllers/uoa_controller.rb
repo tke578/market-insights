@@ -19,7 +19,7 @@ class UoaController < ApplicationController
 			format.html
 			format.csv {
 				if params[:search].present?
-					file_name =  params[:search][:date].present? ? Date.strptime(params[:search][:date], '%m/%d/%Y').strftime("%m%d%Y") : Date.today.strftime("%m%d%Y")
+					file_name =  params[:search][:date_range].present? ? Date.strptime(params[:search][:date], '%m/%d/%Y').strftime("%m%d%Y") : Date.today.strftime("%m%d%Y")
 				else
 					file_name = Date.today.strftime("%m%d%Y")
 				end
@@ -32,6 +32,6 @@ class UoaController < ApplicationController
 	private
 
 	def uoa_params
-		params.require(:search).permit(:date, :commit)
+		params.require(:search).permit(:date_range, :commit)
 	end
 end

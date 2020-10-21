@@ -1,29 +1,63 @@
-
-	<div class="container">
-		<%= form_tag(uoa_index_path, method: :get) do %>
-			<div class="form-row">
-				<div class="col">
-					<%= label_tag(:date_range, nil) %>
-				</div>
-				<div class="col">
-					<%= text_field_tag("search[date]", params[:search].present? ? params[:search][:date] : nil, class: 'form-control datepicker', placeholder: 'Search Date') %>
-				</div>
-				<div class="col">
-					<%= label_tag(:ticker, nil) %>
-				</div>
-				<div class="col">
-					<p>Search ticker</p>
-				</div>
+<div class="container">
+		<%= form_tag(uoa_index_path, method: :get, class: 'card p-1') do %>
+			<div class="form-group">
+				<div class="col-sm-10">
+					<%= label_tag(:date_created, nil, {class: 'form-label'}) %>
 				
+					<%= text_field_tag("search[date_range]", params[:search].present? ? params[:search][:date_range] : nil, class: 'form-control datepicker', placeholder: 'Search Date') %>
+				</div>
+
 			</div>
-			
-			<div class="form-row">
+			<div class="form-row p-3">
+			    <div class="form-group col-md-3">
+			      <label for="inputCity">Symbol</label>
+			      <input type="text" class="form-control" id="inputCity">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputState">Price</label>
+			      <select id="inputState" class="form-control">
+			        <option selected>Choose...</option>
+			        <option>...</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputZip">Type</label>
+			      <input type="text" class="form-control" id="inputZip">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputZip">Strike</label>
+			      <input type="text" class="form-control" id="inputZip">
+			    </div>
+			</div>
+			<div class="form-row p-3">
+			    <div class="form-group col-md-3">
+			      <label for="inputCity">Expiration Date</label>
+			      <input type="text" class="form-control" id="inputCity">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputState">Volume</label>
+			      <select id="inputState" class="form-control">
+			        <option selected>Choose...</option>
+			        <option>...</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputZip">Open Interest</label>
+			      <input type="text" class="form-control" id="inputZip">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="inputZip">Implied Volatility</label>
+			      <input type="text" class="form-control" id="inputZip">
+			    </div>
+			</div>
+		<div class="form-row p-3">
+			<div class="form-group col-md-3">
+				<%= link_to("Download CSV", uoa_index_path(request.params.merge(format: :csv)), class: 'btn btn-info') %>
+			</div>
+			<div class="form-group col-md-3">
 				<%= submit_tag('search', name: nil, class: 'btn btn-success') %>
 				<%= link_to("Reset Search", uoa_index_path, class: 'btn btn-danger') %>
-				<%= link_to("Download CSV", uoa_index_path(request.params.merge(format: :csv), class: 'btn btn-info')) %>
 			</div>
-			
-		<% end %>
-
-	</div>
-
+		</div>
+	<% end %>
+</div>

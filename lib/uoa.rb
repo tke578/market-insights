@@ -1,5 +1,7 @@
 require 'mongo'
 require 'csv'
+require 'date_parser'
+
 
 Mongo::Logger.logger.level = Logger::FATAL
 
@@ -10,7 +12,7 @@ class UOA
 	attr_reader	:collection
 
 	def initialize()
-		client 		= Mongo::Client.new(ENV["MONGO_URI"])
+		client 		= Mongo::Client.new("mongodb+srv://taz:VATnBl3dvrBKRK20@barchart.ejira.mongodb.net/barchart?retryWrites=true&w=majority")
 		@collection = client[:uoa]
 		@data 		= []
 	end
@@ -24,10 +26,19 @@ class UOA
 
 	def search(params)
 		query = {}
-		if params[:date].present?
-			date_parsed = Date.strptime(params[:date], '%m/%d/%Y')
-			condition = { 'created_at': { '$gt': date_parsed.beginning_of_day, '$lt': date_parsed.end_of_day } }
-			query.merge!(condition)
+		puts "This is the params"
+		puts params
+		if params[:date_range].present?
+			date_range = DateParser.normalize_beg_end_dates(params[:date_range])
+			puts date_range
+			unless date_range.blank?
+				puts date_range.first
+				puts date_range.last
+				beg_date = Date.strptime(date_range.first, '%m-%d-%Y')
+				end_date = Date.strptime(date_range.last, '%m-%d-%Y')
+				condition = { 'created_at': { '$gt': beg_date.beginning_of_day, '$lt': end_date.end_of_day } }
+				query.merge!(condition)
+			end
 		end
 		response = @collection.find(query)
 		response.each { |r| @data.push(r) }

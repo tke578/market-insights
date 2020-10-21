@@ -1,7 +1,8 @@
 <div class="container">
+	<h2>Unusual Options Activity</h2>
+	
 	<%= render 'search' %>
 
-	<h2>Unusual Options Activity</h2>
 	<table class="table table-hover">
 		<thead>
 			<th scope="col">#</th>
@@ -15,7 +16,8 @@
 			<th scope="col">Volume</th>
 			<th scope="col">Open Interest</th>
 			<th scope="col">I.V.</th>
-			<th scope="col">Last Traded</th>
+			<th scope="col">Date created</th>
+			<th scope="col">Traded Time</th>
 		</thead>
 		<tbody>
 			<% @collection.each_with_index do |o, i| %>
@@ -31,10 +33,14 @@
 					<td scope="row"><%= o['Volume']		%></td>
 					<td scope="row"><%= o['Open Int']	%></td>
 					<td scope="row"><%= o['IV']			%></td>
+					<td scope="row">
+						<%= o['created_at'].strftime("%m/%d/%Y") %>
+					</td>
 					<td scope="row"><%= o['Last Trade'] %></td>
 				</tr>
 			<% end %>
 		</tbody>
 	</table>
 </div>
+	
 
