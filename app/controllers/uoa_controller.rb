@@ -5,16 +5,13 @@ class UoaController < ApplicationController
 
 	def index
 		options = UOA.new()
+		@tickers = options.tickers
 		if params[:search].present?
-			puts "has params"
 			options.search(uoa_params)
 		else
-			puts "no params"
 			options.recent_trades
 		end
 		@collection = options.data
-		puts "Size"
-		puts @collection.size
 		respond_to  do |format|
 			format.html
 			format.csv {
@@ -32,6 +29,8 @@ class UoaController < ApplicationController
 	private
 
 	def uoa_params
-		params.require(:search).permit(:date_range, :commit)
+		params.require(:search).permit(:date_range, :symbol, :commit, :price_range_begin, :price_range_end, :expiration_date, :type,
+										:strike_price_range_begin, :strike_price_range_end, :open_interest_range_begin, :open_interest_range_end,
+										:implied_volatility_range_begin, :implied_volatility_range_end, :volume_range_begin, :volume_range_end)
 	end
 end

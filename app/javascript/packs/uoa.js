@@ -8,3 +8,9 @@ document.addEventListener("turbolinks:load", () => {
   })
 })
 
+
+$(function(){
+    const tickers =  $('.autocomplete').data('tickers');
+    $('.autocomplete').autocomplete( { source: tickers } );
+})
+

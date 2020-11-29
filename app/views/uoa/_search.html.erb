@@ -2,7 +2,7 @@
 		<%= form_tag(uoa_index_path, method: :get, class: 'card p-1') do %>
 			<div class="form-group">
 				<div class="col-sm-10">
-					<%= label_tag(:date_created, nil, {class: 'form-label'}) %>
+					<%= label_tag(:date_created_range, nil, {class: 'form-label'}) %>
 				
 					<%= text_field_tag("search[date_range]", params[:search].present? ? params[:search][:date_range] : nil, class: 'form-control datepicker', placeholder: 'Search Date') %>
 				</div>
@@ -10,44 +10,75 @@
 			</div>
 			<div class="form-row p-3">
 			    <div class="form-group col-md-3">
-			      <label for="inputCity">Symbol</label>
-			      <input type="text" class="form-control" id="inputCity">
+			    	<%= label_tag :symbol %>
+			    	<%= text_field_tag("search[symbol]",params[:search].present? ? params[:search][:symbol] : nil,  data: {tickers: @tickers},class: 'autocomplete form-control') %>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputState">Price</label>
-			      <select id="inputState" class="form-control">
-			        <option selected>Choose...</option>
-			        <option>...</option>
-			      </select>
+			      <%= label_tag :type %>
+			      <%= select_tag("search[type]", options_for_select(["Call", "Put"], selected: params[:search].present? ? params[:search][:type] : 0), {class: "form-control"}) %>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputZip">Type</label>
-			      <input type="text" class="form-control" id="inputZip">
+			      <label for="formControlRange">Stock Price Range Begin</label>
+			      	<%= range_field_tag("search[price_range_begin]", params[:search].present? ? params[:search][:price_range_begin] : 0, { class: 'form-control-range', min: '0', max: '1000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:price_range_begin] : '' %></output>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputZip">Strike</label>
-			      <input type="text" class="form-control" id="inputZip">
+			      <label for="formControlRange">Stock Price Range End</label>
+			      	<%= range_field_tag("search[price_range_end]", params[:search].present? ? params[:search][:price_range_end] : 0, { class: 'form-control-range', min: '0', max: '5000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:price_range_end] : '' %></output>
+			    </div>
+			    
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10">
+					<%= label_tag(:expiration_date_range, nil, {class: 'form-label'}) %>
+				
+					<%= text_field_tag("search[expiration_date]", params[:search].present? ? params[:search][:expiration_date] : nil, class: 'form-control datepicker', placeholder: 'Search Date') %>
+				</div>
+
+			</div>
+			<div class="form-row p-3">
+			    <div class="form-group col-md-3">
+			      <label for="formControlRange">Strike Price Range Begin</label>
+			      	<%= range_field_tag("search[strike_price_range_begin]", params[:search].present? ? params[:search][:strike_price_range_begin] : 0, { class: 'form-control-range', min: '0', max: '5000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:strike_price_range_begin] : '' %></output>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="formControlRange">Strike Price Range End</label>
+			      	<%= range_field_tag("search[strike_price_range_end]", params[:search].present? ? params[:search][:strike_price_range_end] : 0, { class: 'form-control-range', min: '0', max: '5000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:strike_price_range_end] : '' %></output>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="formControlRange">Open Interest Range Begin</label>
+			      	<%= range_field_tag("search[open_interest_range_begin]", params[:search].present? ? params[:search][:open_interest_range_begin] : 0, { class: 'form-control-range', min: '0', max: '5000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:open_interest_range_begin] : '' %></output>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="formControlRange">Open Interest Range End</label>
+			      	<%= range_field_tag("search[open_interest_range_end]", params[:search].present? ? params[:search][:open_interest_range_end] : 0, { class: 'form-control-range', min: '0', max: '50000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:open_interest_range_end] : '' %></output>
 			    </div>
 			</div>
 			<div class="form-row p-3">
 			    <div class="form-group col-md-3">
-			      <label for="inputCity">Expiration Date</label>
-			      <input type="text" class="form-control" id="inputCity">
+			      <label for="formControlRange">Implied Volatility Range Begin</label>
+			      	<%= range_field_tag("search[implied_volatility_range_begin]", params[:search].present? ? params[:search][:implied_volatility_range_begin] : 0, { class: 'form-control-range', min: '0', max: '500', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:implied_volatility_range_begin] : '' %></output>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputState">Volume</label>
-			      <select id="inputState" class="form-control">
-			        <option selected>Choose...</option>
-			        <option>...</option>
-			      </select>
+			      <label for="formControlRange">Implied Volatility Range End</label>
+			      	<%= range_field_tag("search[implied_volatility_range_end]", params[:search].present? ? params[:search][:implied_volatility_range_end] : 0, { class: 'form-control-range', min: '0', max: '500', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:implied_volatility_range_end] : '' %></output>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputZip">Open Interest</label>
-			      <input type="text" class="form-control" id="inputZip">
+			      <label for="formControlRange">Volume Range Begin</label>
+			      	<%= range_field_tag("search[volume_range_begin]", params[:search].present? ? params[:search][:volume_range_begin] : 0, { class: 'form-control-range', min: '0', max: '5000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:volume_range_begin] : '' %></output>
 			    </div>
 			    <div class="form-group col-md-3">
-			      <label for="inputZip">Implied Volatility</label>
-			      <input type="text" class="form-control" id="inputZip">
+			      <label for="formControlRange">Volume Range End</label>
+			      	<%= range_field_tag("search[volume_range_end]", params[:search].present? ? params[:search][:volume_range_end] : 0, { class: 'form-control-range', min: '0', max: '50000', oninput: 'this.nextElementSibling.value = this.value'}) %>
+    				<output><%= params[:search].present? ? params[:search][:volume_range_end] : '' %></output>
 			    </div>
 			</div>
 		<div class="form-row p-3">
