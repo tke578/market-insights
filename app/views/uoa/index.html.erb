@@ -1,10 +1,13 @@
-<div class="container">
+<div class="container-fluid">
 	<h2>Unusual Options Activity</h2>
 	
 	<%= render 'search' %>
 	
-	<table class="table table-hover">
-		<thead>
+	<br>
+	<br>
+	<p>Total Records: <%= @collection.size %></p>
+	<table id="table" data-toggle="table" data-sticky-header="true" class="table table-hover">
+		<thead class="thead-dark sticky-header">
 			<th scope="col">#</th>
 			<th scope="col">Symbol</th>
 			<th scope="col">Price</th>
@@ -42,3 +45,5 @@
 		</tbody>
 	</table>
 </div>
+
+

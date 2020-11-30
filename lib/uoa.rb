@@ -27,8 +27,7 @@ class UOA
 
 	def search(params)
 		query = {}
-		puts "This is the params"
-		puts params
+
 		if params[:date_range].present?
 			date_range = DateParser.normalize_beg_end_dates(params[:date_range])
 			unless date_range.blank?
@@ -71,8 +70,7 @@ class UOA
 			condition = { 'Volume': { '$gt': params[:volume_range_begin].to_i, '$lt': params[:volume_range_end].to_i } }
 			query.merge!(condition)
 		end
-		puts "query"
-		puts query
+
 		if query.blank?
 			recent_trades
 		else

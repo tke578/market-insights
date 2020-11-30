@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>MarketInsights</title>
@@ -12,13 +12,13 @@
     <%= stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css' %>
   </head>
 
-  <body style="padding-top: 75px;">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container">
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Market Insights</span>
       </div>
     </nav>
-    <div role="main" class="container">
+    <div role="main" class="container-fluid">
       <%= yield %>
     </div>
       

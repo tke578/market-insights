@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 		<%= form_tag(uoa_index_path, method: :get, class: 'card p-1') do %>
 			<div class="form-group">
 				<div class="col-sm-10">
@@ -86,7 +86,7 @@
 				<%= link_to("Download CSV", uoa_index_path(request.params.merge(format: :csv)), class: 'btn btn-info') %>
 			</div>
 			<div class="form-group col-md-3">
-				<%= submit_tag('search', name: nil, class: 'btn btn-success') %>
+				<%= submit_tag('Search', name: nil, class: 'btn btn-success', data: { disable_with: "Searching..." }) %>
 				<%= link_to("Reset Search", uoa_index_path, class: 'btn btn-danger') %>
 			</div>
 		</div>

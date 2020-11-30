@@ -11,6 +11,12 @@ require("@rails/activestorage").start()
 require("channels")
 require("packs/uoa")
 require("jquery-ui")
+require("bootstrap-table")
+require("bootstrap-table/dist/bootstrap-table.min.css")
+require("bootstrap-table/dist/bootstrap-table.min.js")
+require("bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js")
+require("bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.css")
+
 
 
 

@@ -23,4 +23,4 @@ services:
       PGUSER: postgres
       PGPASSWORD: postgres
       MONGO_URI: ${MONGO_URI}
-      RAILS_ENV: development
+      RAILS_ENV: production
