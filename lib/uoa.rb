@@ -1,17 +1,21 @@
 require 'mongo'
 require 'csv'
+require 'date_parser'
+
 
 Mongo::Logger.logger.level = Logger::FATAL
 
 class UOA
+	include ActiveModel::Validations
 
-	attr_accessor :data
+	attr_accessor :data, :tickers
 	attr_reader	:collection
 
 	def initialize()
-		client 		= Mongo::Client.new(ENV["MONGO_URI"])
+		client 		= Mongo::Client.new(ENV['MONGO_URI'])
 		@collection = client[:uoa]
 		@data 		= []
+		@tickers 	= []
 	end
 
 
@@ -23,14 +27,63 @@ class UOA
 
 	def search(params)
 		query = {}
-		if params[:date].present?
-			date_parsed = Date.strptime(params[:date], '%m/%d/%Y')
-			condition = { 'created_at': { '$gt': date_parsed.beginning_of_day, '$lt': date_parsed.end_of_day } }
+
+		if params[:date_range].present?
+			date_range = DateParser.normalize_beg_end_dates(params[:date_range])
+			unless date_range.blank?
+				beg_date = Date.strptime(date_range.first, '%m-%d-%Y')
+				end_date = Date.strptime(date_range.last, '%m-%d-%Y')
+				condition = { 'created_at': { '$gt': beg_date.beginning_of_day, '$lt': end_date.end_of_day } }
+				query.merge!(condition)
+			end
+		end
+		if params[:symbol].present?
+			condition = { "Symbol": params[:symbol].upcase }
 			query.merge!(condition)
 		end
-		response = @collection.find(query)
-		response.each { |r| @data.push(r) }
+		if params[:price_range_begin] != "0" and params[:price_range_end] != "0"
+			condition = { 'Price': { '$gt': params[:price_range_begin].to_i, '$lt': params[:price_range_end].to_i } }
+			query.merge!(condition)
+		end
+		if params[:strike_price_range_begin] != "0" and params[:strike_price_range_end] != "0"
+			condition = { 'Strike': { '$gt': params[:strike_price_range_begin].to_i, '$lt': params[:strike_price_range_end].to_i } }
+			query.merge!(condition)
+		end
+		if params[:expiration_date].present?
+			date_range = DateParser.normalize_beg_end_dates(params[:expiration_date])
+			unless date_range.blank?
+				beg_date = Date.strptime(date_range.first, '%m-%d-%Y')
+				end_date = Date.strptime(date_range.last, '%m-%d-%Y')
+				condition = { 'Exp Date': { '$gt': beg_date.beginning_of_day, '$lt': end_date.end_of_day } }
+				query.merge!(condition)
+			end
+		end
+		if params[:open_interest_range_begin] != "0" and params[:open_interest_range_end] != "0"
+			condition = { 'Open Int': { '$gt': params[:open_interest_range_begin].to_i, '$lt': params[:open_interest_range_end].to_i } }
+			query.merge!(condition)
+		end
+		if params[:implied_volatility_range_begin] != "0" and params[:implied_volatility_range_end] != "0"
+			condition = { 'IV': { '$gt': params[:implied_volatility_range_begin].to_i, '$lt': params[:implied_volatility_range_end].to_i } }
+			query.merge!(condition)
+		end
+		if params[:volume_range_begin] != "0" and params[:volume_range_end] != "0"
+			condition = { 'Volume': { '$gt': params[:volume_range_begin].to_i, '$lt': params[:volume_range_end].to_i } }
+			query.merge!(condition)
+		end
+
+		if query.blank?
+			recent_trades
+		else
+			response = @collection.find(query)
+			response.each { |r| @data.push(r) }
+		end
 	end
+
+	def tickers
+		response = @collection.distinct("Symbol")
+		response.each { |r| @tickers.push(r) }
+	end
+
 
 	def to_csv
 		return if @data.blank?

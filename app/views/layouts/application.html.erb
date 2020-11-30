@@ -1,7 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <title>MarketInsights</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +12,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Market Insights</span>
+      </div>
+    </nav>
+    <div role="main" class="container-fluid">
+      <%= yield %>
+    </div>
+      
+      
+      
+    </div>
   </body>
 </html>
